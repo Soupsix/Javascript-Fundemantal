@@ -1,0 +1,33 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "age": 30,
+        "number": "123-456-7890"
+    }
+    ,
+    {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "john.doe@example.com",
+        "age": 32,
+        "number": "132-456-7890"
+    }
+    ,
+    {
+        "id": 3,
+        "name": "Donald Golde",
+        "email": "Golder.doe@example.com",
+        "age": 31,
+        "number": "132-456-7890"
+    }
+    ,
+    {
+        "id": 4,
+        "name": "Soupsix",
+        "email": "Soupsix.doe@example.com",
+        "age": 22,
+        "number": "132-456-7890"
+    }
+]

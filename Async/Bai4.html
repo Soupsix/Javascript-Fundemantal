@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build AJAX page với Javascript thuần</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+
+        let isDataShown = false; // Biến để theo dõi trạng thái hiển thị dữ liệu
+
+        function AJAX_GetData() {
+
+            if (isDataShown) {
+                // If data is shown, hide it
+                document.getElementById("content").innerHTML = "NỘI DUNG JSON từ Server";
+                document.getElementById("showlist").innerHTML = "";
+                isDataShown = false;
+                document.querySelector("button").textContent = "Load Data";
+            } else {
+                //tạo đối tượng AJAX để request tới 1 trang (Server Page) trên máy chủ 
+                const xmlhttp = new XMLHttpRequest();
+
+                //Khi thành công sẽ chạy function được gán cho .onload
+                xmlhttp.open("GET", "data.json");
+                xmlhttp.send();
+
+                //xmlhttp.onload = function(){} được gọi khi gửi yêu cầu thành công để nhận kết quả
+                xmlhttp.onload = function () {
+                    //responseText là nội dung trả về từ strURL
+                    //hiển thị chuỗi JSon vào thẻ content
+                    document.getElementById("content").innerHTML = this.responseText;
+                    //hiển thị dạng danh sách các nhân viên bằng vòng lặp
+                    var StaffList = JSON.parse(this.responseText);
+                    isDataShown = true; // Đặt trạng thái là đã hiển thị dữ liệu
+                    document.querySelector("button").textContent = "Hide Data"; // Cập nhật nút thành "Hide Data"
+                    ShowStaff(StaffList)
+                }
+            }
+
+
+        }
+
+        //hàm hiển thị mảng các staff lên màn hình thành từng dòng
+        function ShowStaff(Arr) {
+            str = "";
+            for (i = 0; i < Arr.length; i++) {
+                var Obj = Arr[i];
+                str += "<p>ID:" + Obj.id + "</p>";
+                str += "<p>Name:" + Obj.name + "</p>";
+                str += "<p>Email:" + Obj.email + "</p>";
+                str += "<p>Age:" + Obj.age + "</p>";
+                str += "<p>Phone:" + Obj.number + "</p>";
+                str += "<hr>";
+            }
+            document.getElementById("showlist").innerHTML = str;
+        }
+
+        //         function ShowStaff(Arr) {
+        //     const str = Arr.map(Obj => `
+        //         <p>ID: ${Obj.id}</p>
+        //         <p>Name: ${Obj.name}</p>
+        //         <p>Email: ${Obj.email}</p>
+        //         <p>Age: ${Obj.age}</p>
+        //         <p>Phone: ${Obj.number}</p>
+        //         <hr>
+        //     `).join(""); // .join("") để nối mảng thành 1 chuỗi HTML
+
+        //     document.getElementById("showlist").innerHTML = str;
+        // }
+
+
+    </script>
+</head>
+
+<body>
+    <h3>Kết nối và đọc dữ liệu JSON từ máy chủ bằng AJAX</h3>
+    <button onclick="AJAX_GetData();">Load Data</button>
+    <div id="content">NỘI DUNG JSON từ Server</div>
+    <div id="showlist"></div>
+</body>
+
+</html>
